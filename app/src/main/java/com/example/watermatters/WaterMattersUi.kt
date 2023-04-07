@@ -15,10 +15,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.watermatters.ui.*
-import com.google.mlkit.vision.barcode.BarcodeScanner
-import com.google.mlkit.vision.barcode.BarcodeScannerOptions
-import com.google.mlkit.vision.barcode.BarcodeScanning
-import com.google.mlkit.vision.barcode.common.Barcode
 
 enum class WatterMattersScreen() {
     QRScanner(),
@@ -56,7 +52,9 @@ fun WaterMattersApp(){
         val uiState by viewModel.uiState.collectAsState()
         NavHost(navController = navController, startDestination = currentScreen.name, modifier = Modifier.padding(paddingValues)) {
             composable(WatterMattersScreen.QRScanner.name) {
-                QRScannerScreen()
+                QRScannerScreen(onConfirm = { userName ->
+                    navigateTo(WatterMattersScreen.Users.name, navController)
+                })
             }
             composable(WatterMattersScreen.Users.name) {
                 UsersScreen()

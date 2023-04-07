@@ -1,12 +1,7 @@
 package com.example.watermatters.ui
 
-import android.content.Intent
 import android.graphics.*
 import android.graphics.drawable.Drawable
-import android.net.Uri
-import android.view.MotionEvent
-import android.view.View
-import com.google.mlkit.vision.barcode.common.Barcode
 
 /**
  * A Drawable that handles displaying a QR Code's data and a bounding box around the QR code.
@@ -15,7 +10,7 @@ class QrCodeDrawable(qrCodeViewModel: QrCodeViewModel) : Drawable() {
     private val boundingRectPaint = Paint().apply {
         style = Paint.Style.STROKE
         color = Color.YELLOW
-        strokeWidth = 5F
+        strokeWidth = 10F
         alpha = 200
     }
 
