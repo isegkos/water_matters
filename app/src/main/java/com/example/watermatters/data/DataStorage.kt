@@ -2,7 +2,7 @@ package com.example.watermatters.data
 
 import com.example.watermatters.R
 
-class DataStorage {
+object DataStorage {
     val users = mutableListOf(
         User(
             userName = "isegkos",

@@ -2,18 +2,16 @@ package com.example.watermatters
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.watermatters.data.DataStorage
 import com.example.watermatters.ui.*
 
 enum class WatterMattersScreen() {
@@ -30,7 +28,6 @@ fun WaterMattersApp(){
     val currentScreen = WatterMattersScreen.valueOf(
         backStackEntry?.destination?.route ?: WatterMattersScreen.QRScanner.name
     )
-    val viewModel: WaterMattersViewModel = viewModel()
 
     Scaffold(
         topBar = {
@@ -49,7 +46,8 @@ fun WaterMattersApp(){
             )
         }
     ) {paddingValues ->
-        val uiState by viewModel.uiState.collectAsState()
+        val users = DataStorage.users
+        users.sortByDescending { it.drops }
         NavHost(navController = navController, startDestination = currentScreen.name, modifier = Modifier.padding(paddingValues)) {
             composable(WatterMattersScreen.QRScanner.name) {
                 QRScannerScreen(onConfirm = { userName ->
@@ -57,7 +55,7 @@ fun WaterMattersApp(){
                 })
             }
             composable(WatterMattersScreen.Users.name) {
-                UsersScreen()
+                UsersScreen(users = users)
             }
             composable(WatterMattersScreen.Prizes.name) {
                 PrizesScreen()
